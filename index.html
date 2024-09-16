@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimal Greeting!</title>
+    <link rel="icon" type="image/x-icon" href="/images/pot.ico">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbit&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      function performSearch(event) {
+        event.preventDefault();
+        const searchQuery = document.getElementById("search-input").value;
+        if (searchQuery.trim() !== "") {
+          const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(
+            searchQuery
+          )}`;
+          window.open(searchUrl, "_blank");
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-gray-900">
+    <div class="container mx-auto">
+      <!-- Time Display -->
+      <h1
+        class="text-white font-bold text-5xl text-center mt-[5%] hover:scale-105 transition-transform duration-300"
+        id="time"
+      ></h1>
+      <!-- Greeting Display -->
+      <p
+        class="text-white font-bold text-4xl md:text-5xl text-center mt-[8%] hover:text-gray-400 transition-colors duration-300"
+        id="greeting"
+      ></p>
+
+      <!-- Social Media Links as Text -->
+      <div class="flex justify-center mt-[10%] space-x-6 text-xl">
+        <a
+          href="https://www.youtube.com/"
+          class="text-white hover:text-red-600 hover:underline transition-colors duration-300"
+          >YouTube</a
+        >
+        <a
+          href="https://www.instagram.com/"
+          class="text-white hover:text-pink-500 hover:underline transition-colors duration-300"
+          >Instagram</a
+        >
+        <a
+          href="https://www.github.com/"
+          class="text-white hover:text-gray-500 hover:underline transition-colors duration-300"
+          >GitHub</a
+        >
+      </div>
+    </div>
+
+    <!-- Search Form -->
+    <div class="mt-[10%] flex justify-center">
+      <form class="w-full max-w-sm" onsubmit="performSearch(event)">
+        <div class="flex items-center border-b border-gray-700 py-2">
+          <input
+            id="search-input"
+            class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300"
+            type="text"
+            placeholder="Search..."
+            aria-label="Search"
+          />
+          <button
+            class="flex-shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+            type="submit"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="main.js"></script>
+  </body>
+</html>

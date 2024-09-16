@@ -1,0 +1,94 @@
+/* Body styling */
+body {
+  font-family: "Orbit", sans-serif;
+  background-color: #1a202c; /* Dark background */
+  color: white; /* Default text color */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Container to center all content */
+.container {
+  text-align: center;
+}
+
+/* Time styling with subtle hover effect */
+#time {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-top: 2rem;
+  transition: transform 0.3s ease;
+}
+
+/* Greeting styling */
+#greeting {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-top: 2rem;
+  transition: color 0.3s ease;
+}
+
+/* Input field */
+input[type="text"] {
+  background-color: transparent;
+  border: 2px solid #4a5568;
+  color: white;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  border-radius: 8px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+
+/* Placeholder color */
+input[type="text"]::placeholder {
+  color: #a0aec0;
+}
+
+/* Search button */
+button {
+  background-color: #6366f1;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px; /* Full rounded button */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4f46e5;
+}
+
+/* Flexbox adjustments for form */
+form {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form .flex {
+  border-bottom: 2px solid #4a5568;
+}
+
+/* Social media links styling */
+.flex.space-x-6 a {
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.flex.space-x-6 a:hover {
+  text-decoration: underline;
+  transform: scale(1.05);
+}
