@@ -6,6 +6,12 @@
     <title>Our 1 Year Anniversary</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Itim&display=swap"
+      rel="stylesheet"
+    />
     <style>
       @keyframes pulse {
         0%,
@@ -19,64 +25,29 @@
       .animate-pulse-custom {
         animation: pulse 2s infinite;
       }
-      .photo-item {
+
+      /* Ensure all images are the same size */
+      .gallery img {
+        width: 100%;
+        height: 200px; /* Fixed height */
+        object-fit: cover; /* Ensures the image covers the area without distortion */
+        border-radius: 10px;
         transition: transform 0.3s ease;
       }
-      .photo-item:hover {
+
+      .gallery img:hover {
         transform: scale(1.05);
       }
 
-      /* From Uiverse.io by suleymanlaarabidev */
-      .card {
-        width: 254px;
-        height: 254px;
-        transition: all 0.4s;
-        border-radius: 10px;
-        
-        font-size: 30px;
-        font-weight: 900;
+      .thai-text {
+        font-family: "Itim", cursive;
       }
 
-      .card:hover {
-        border-radius: 15px;
-        cursor: pointer;
-        transform: scale(1.2);
-      }
-
-      .first-content {
-        height: 100%;
-        width: 100%;
-        transition: all 0.4s;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 1;
-        border-radius: 15px;
-      }
-
-      .card:hover .first-content {
-        height: 0px;
-        opacity: 0;
-      }
-
-      .second-content {
-        height: 0%;
-        width: 100%;
-        opacity: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 15px;
-        transition: all 0.4s;
-        font-size: 0px;
-        transform: rotate(90deg) scale(-1);
-      }
-
-      .card:hover .second-content {
-        opacity: 1;
-        height: 100%;
-        font-size: 1.8rem;
-        transform: rotate(0deg);
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        padding: 16px;
       }
     </style>
   </head>
@@ -93,126 +64,6 @@
         <p class="text-xl opacity-90">365 Days of Love & Counting</p>
       </div>
     </header>
-
-    <!-- Photo Gallery -->
-    <section class="max-w-6xl px-4 py-16 mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
-        Our Precious Moments
-      </h2>
-      <div></div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- From Uiverse.io by suleymanlaarabidev -->
-        <div class="card">
-          <div class="first-content photo-item relative overflow-hidden rounded-xl shadow-lg">
-                      <img
-                src="photo2.png"
-                alt="Beach vacation"
-                class="w-full h-64 object-cover"
-              />
-          </div>
-          <div class="second-content photo-item relative overflow-hidden rounded-xl shadow-lg">
-            <img
-                src="photo3.jpg"
-                alt="Beach vacation"
-                class="w-full h-64 object-cover"   
-              />
-          </div>
-        </div>
-        <!-- Repeat for other photos -->
-        <div class="photo-item relative overflow-hidden rounded-xl shadow-lg">
-          <img
-            src="photo2.png"
-            alt="Beach vacation"
-            class="w-full h-64 object-cover"
-          />
-          <div
-            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-          >
-            <svg
-              class="w-8 h-8 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              ></path>
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-        <div class="photo-item relative overflow-hidden rounded-xl shadow-lg">
-          <img
-            src="photo3.jpg"
-            alt="Beach vacation"
-            class="w-full h-64 object-cover"
-          />
-          <div
-            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-          >
-            <svg
-              class="w-8 h-8 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              ></path>
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-        <div class="photo-item relative overflow-hidden rounded-xl shadow-lg">
-          <img
-            src="photo3.jpg"
-            alt="Beach vacation"
-            class="w-full h-64 object-cover"
-          />
-          <div
-            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-          >
-            <svg
-              class="w-8 h-8 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              ></path>
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Add more photos as needed -->
-      </div>
-    </section>
 
     <!-- Love Letter -->
     <section class="max-w-3xl mx-auto px-4 py-16">
@@ -231,71 +82,30 @@
         <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
           To My Forever Love
         </h2>
-        <p class="text-gray-600 leading-relaxed mb-8">
-          Every moment with you feels like a beautiful dream come true. This
-          past year has been filled with countless smiles, adventures, and
-          precious memories that I'll cherish forever. You make my world
-          brighter just by being in it, and I can't wait to create more
-          wonderful memories together.
+        <p class="text-gray-600 thai-text text-center leading-relaxed mb-8">
+          สวัสดีค่ะ
+          คนสวยของเค้าเค้าขอบคุณนะคะที่เธออยู่ข้างเค้าตั้งแต่วันแรกที่เราได้เริ่มคุยกันจนถึงวันนี้ที่เราเป็นเป็นแฟนกัน
+          ครบ1ปีแยะแล้วเค้าก็ขอโทษที่ผ่านๆมาที่เค้าทำให้เธอเสียใจร้องไห้เพราะเค้ากี่รอบต่อกี่รอบแล้วก็ไม่รู้เค้าอยากบอกเธอว่าเค้ารักเธฮมากๆ
+          เค้าอยากอยู่กับเธอไปตลอดชีวิตเลยนะ อยากมีไอจิ๋วด้วยกันอยากมีบ้าน
+          อยากมีครอบครัวที่มีพร้อมทุกอย่าง เค้าสัญญากับเธอเลยนะ
+          ว่าเค้าจะทำให้ครอบครัวเราเป็นครอบครัวที่อบอุ่นมากๆ เค้ารักเธอนะคะ
+          แล้วก็ท้ายนี้ของขวัญชิ้นนี้เป็นสิ่งที่เค้าทำตอนโทรกับแต่ไม่รู้ว่าเธอจะรู้มั้ยว่า
+          ตอนนี้เค้าแอบเธอเขียนเว็บเซอร์ไพรส์เธออยู่ อิอิ เค้ารักเธอนะคะ
+          รักเธอที่สุดในโลก อยู่เป็นทุกอย่างของเค้าไปนานนะ.
         </p>
       </div>
     </section>
 
-    <!-- Timeline -->
-    <section class="max-w-4xl mx-auto px-4 py-16">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
-        Our Journey Together
-      </h2>
-      <div class="space-y-8">
-        <!-- Timeline Item -->
-        <div
-          class="bg-white rounded-xl shadow-lg p-6 transform hover:-translate-y-1 transition-transform duration-300"
-        >
-          <div class="flex items-start gap-4">
-            <svg
-              class="w-6 h-6 text-pink-500 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <div>
-              <h3 class="text-xl font-semibold text-gray-800 mb-2">
-                First Kiss
-              </h3>
-              <p class="text-gray-600 mb-2">October 26, 2023</p>
-              <div class="flex items-center text-gray-500">
-                <svg
-                  class="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <span>Central Park</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Add more timeline items as needed -->
+    <!-- Gallery Section -->
+    <section class="container mx-auto px-4 py-16">
+      <h2 class="text-3xl font-bold text-center mb-8">Our Memories</h2>
+      <div class="gallery">
+        <img src="photo1.jpg" alt="Memory 1" class="photo-item" />
+        <img src="photo2.png" alt="Memory 2" class="photo-item" />
+        <img src="photo3.jpg" alt="Memory 3" class="photo-item" />
+        <img src="photo4.jpg" alt="Memory 4" class="photo-item" />
+        <img src="photo5.jpg" alt="Memory 5" class="photo-item" />
+        <img src="photo6.jpg" alt="Memory 6" class="photo-item" />
       </div>
     </section>
 
