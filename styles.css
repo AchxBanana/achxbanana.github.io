@@ -1,7 +1,7 @@
 /* Body styling */
 body {
   font-family: "Orbit", sans-serif;
-  background-color: #343a40; /* Warm brown for background */
+  background-color: #212529; /* Warm brown for background */
   color: #ced4da; /* Soft white-yellow for text */
   margin: 0;
   padding: 0;
@@ -24,7 +24,7 @@ body {
   font-size: 5rem;
   font-weight: bold;
   margin-top: 2rem;
-  color: #ffd966; /* Warm light yellow for time */
+  color: #e9ecef; /* Warm light yellow for time */
   transition: transform 0.3s ease;
 }
 
@@ -33,7 +33,7 @@ body {
   font-size: 3.5rem;
   font-weight: bold;
   margin-top: 2rem;
-  color: #fff1cc; /* Soft white-yellow for greeting */
+  color: #ced4da; /* Soft white-yellow for greeting */
   transition: color 0.3s ease;
 }
 
