@@ -9,14 +9,19 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#000000;
-    --fg:#e4e4e4;
-    --fg-dim:#6b6b6b;
-    --amber:#ffb000;
-    --amber-dim:#7a5200;
+    --bg:#050505;
+    --fg:#d9d9d9;
+    --fg-dim:#666666;
+    --border:#242424;
+
+    --pink:#ffb000;
+    --green:#ffb000;
+    --peach:#ffb000;
+    --blue:#ffb000;
+    --purple:#ffb000;
+    --lblue:#ffb000;
+    --white-sw:#ffb000;
     --amber-glow: 0 0 6px rgba(255,176,0,.55), 0 0 18px rgba(255,176,0,.18);
-    --border:#242016;
-    --danger:#7a3d3d;
   }
   *{box-sizing:border-box;}
   html,body{
@@ -28,79 +33,65 @@
     display:flex; align-items:center; justify-content:center;
     min-height:100vh; padding:6vh 5vw;
   }
-  .screen{
-    width:100%; max-width:760px;
-  }
-
-  /* ---------- top bar: clock + date ---------- */
+  .screen{ width:100%; max-width:760px; }
+  /* ---------- clock ---------- */
   .topbar{
     display:flex; justify-content:space-between; align-items:baseline;
-    margin-bottom:2.2rem;
-    letter-spacing:.04em;
+    margin-bottom:2.2rem; letter-spacing:.04em;
   }
   .clock{
     font-size:clamp(2.2rem, 6vw, 3.2rem);
-    font-weight:600;
-    color:var(--amber);
+    font-weight:600; color:var(--white-sw);
     text-shadow:var(--amber-glow);
     font-variant-numeric: tabular-nums;
   }
   .date{
-    font-size:.8rem;
-    color:var(--fg-dim);
-    text-transform:uppercase;
-    letter-spacing:.12em;
-    align-self:flex-end;
-    margin-bottom:.4rem;
+    font-size:.8rem; color:var(--fg-dim); text-transform:uppercase;
+    letter-spacing:.12em; align-self:flex-end; margin-bottom:.4rem;
   }
 
-  /* ---------- search ---------- */
+  /* ---------- prompt / search ---------- */
   .search-row{
-    display:flex; align-items:center;
+    display:flex; align-items:center; flex-wrap:wrap;
     border:1px solid var(--border);
-    padding:.75rem 1rem;
-    margin-bottom:1.6rem;
+    padding:.75rem 1rem; margin-bottom:1.6rem;
+    font-size:.95rem;
   }
-  .prompt{ color:var(--amber); margin-right:.6rem; text-shadow:var(--amber-glow);}
+  .p-user{ color:var(--green); font-weight:600; }
+  .p-host{ color:var(--fg-dim); }
+  .p-path{ color:var(--fg-dim); margin-right:.15rem; }
+  .p-sign{ color:var(--pink); margin-right:.6rem; text-shadow:var(--amber-glow); }
   #search{
-    flex:1; background:transparent; border:none; outline:none;
-    color:var(--fg); font-family:inherit; font-size:1rem;
-    caret-color:var(--amber);
+    flex:1; min-width:80px; background:transparent; border:none; outline:none;
+    color:var(--fg); font-family:inherit; font-size:.95rem;
+    caret-color:var(--pink);
   }
   #search::placeholder{ color:var(--fg-dim); }
   .cursor{
     display:inline-block; width:.55em; height:1.1em;
-    background:var(--amber); box-shadow:var(--amber-glow);
-    margin-left:2px; animation:blink 1s step-end infinite;
-    vertical-align:text-bottom;
+    background:var(--pink); margin-left:2px; box-shadow:var(--amber-glow);
+    animation:blink 1s step-end infinite; vertical-align:text-bottom;
   }
   @media (prefers-reduced-motion: reduce){ .cursor{ animation:none; opacity:.7;} }
   @keyframes blink{ 50%{ opacity:0; } }
 
-  .divider{
-    border:none; border-top:1px dashed var(--border);
-    margin:1.8rem 0;
-  }
+  .divider{ border:none; border-top:1px dashed var(--border); margin:1.8rem 0; }
 
   /* ---------- two columns ---------- */
-  .panels{
-    display:grid; grid-template-columns:1fr 1fr; gap:2rem;
-  }
+  .panels{ display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
   @media (max-width:600px){ .panels{ grid-template-columns:1fr; } }
-
   .label{
-    font-size:.72rem; letter-spacing:.16em; color:var(--fg-dim);
-    text-transform:uppercase; margin-bottom:.9rem;
+    font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+    margin-bottom:.9rem; font-weight:700;
   }
+  .label.blue{ color:var(--blue); }
+  .label.green{ color:var(--green); }
 
   /* ---------- pomodoro ---------- */
   .timer-display{
-    font-size:clamp(2.4rem,7vw,3rem);
-    font-weight:700;
-    color:var(--amber);
-    text-shadow:var(--amber-glow);
-    font-variant-numeric: tabular-nums;
-    margin-bottom:.8rem;
+    font-size:clamp(2.4rem,7vw,3rem); font-weight:700;
+    color:var(--blue); text-shadow:var(--amber-glow);
+    font-variant-numeric: tabular-nums; margin-bottom:.8rem;
   }
   .timer-mode{ font-size:.75rem; color:var(--fg-dim); margin-bottom:.9rem; }
   .btn-row{ display:flex; flex-wrap:wrap; gap:.5rem; }
@@ -110,50 +101,44 @@
     font-size:.75rem; letter-spacing:.06em; text-transform:uppercase;
     padding:.5rem .8rem; cursor:pointer;
   }
-  button:hover{ border-color:var(--amber); color:var(--amber); }
-  button:focus-visible, input:focus-visible{
-    outline:1px solid var(--amber); outline-offset:2px;
-  }
-  button.active{ border-color:var(--amber); color:var(--amber); text-shadow:var(--amber-glow); }
+  button:hover{ border-color:var(--fg); }
+  button:focus-visible, input:focus-visible{ outline:1px solid var(--pink); outline-offset:2px; }
+  button.active.mode-focus{ background:var(--blue); border-color:var(--blue); color:#050505; }
+  button.active.mode-break{ background:var(--purple); border-color:var(--purple); color:#050505; }
 
   /* ---------- todo ---------- */
   .todo-input-row{ display:flex; gap:.5rem; margin-bottom:.9rem; }
   .todo-input-row input{
     flex:1; background:transparent; border:1px solid var(--border);
-    color:var(--fg); font-family:inherit; font-size:.85rem; padding:.5rem .6rem;
-    outline:none;
+    color:var(--fg); font-family:inherit; font-size:.85rem; padding:.5rem .6rem; outline:none;
   }
-  .todo-input-row input:focus{ border-color:var(--amber); }
+  .todo-input-row input:focus{ border-color:var(--green); }
   ul#todo-list{ list-style:none; margin:0; padding:0; }
   ul#todo-list li{
     display:flex; align-items:center; gap:.6rem;
-    padding:.4rem 0; border-bottom:1px solid var(--border);
-    font-size:.88rem;
+    padding:.4rem 0; border-bottom:1px solid var(--border); font-size:.88rem;
   }
   ul#todo-list li .check{
     width:14px; height:14px; border:1px solid var(--fg-dim);
-    flex:0 0 auto; cursor:pointer; position:relative;
+    flex:0 0 auto; cursor:pointer;
   }
-  ul#todo-list li.done .check{ border-color:var(--amber); background:var(--amber); box-shadow:var(--amber-glow); }
+  ul#todo-list li.done .check{ border-color:var(--green); background:var(--green); }
   ul#todo-list li.done span.task{ color:var(--fg-dim); text-decoration:line-through; }
   ul#todo-list li span.task{ flex:1; cursor:pointer; word-break:break-word; }
   ul#todo-list li .del{
-    color:var(--fg-dim); cursor:pointer; font-size:.9rem; padding:0 .2rem;
-    background:none; border:none;
+    color:var(--fg-dim); cursor:pointer; font-size:.9rem; padding:0 .2rem; background:none; border:none;
   }
-  ul#todo-list li .del:hover{ color:var(--danger); }
+  ul#todo-list li .del:hover{ color:var(--pink); }
   .empty{ color:var(--fg-dim); font-size:.8rem; font-style:italic; }
 
   /* ---------- links ---------- */
-  .links{
-    margin-top:2rem; display:flex; flex-wrap:wrap; gap:1.4rem;
-    font-size:.82rem;
-  }
+  .links{ margin-top:2rem; display:flex; flex-wrap:wrap; gap:1.3rem; font-size:.82rem; }
   .links a{
+    display:inline-flex; align-items:center; gap:.45rem;
     color:var(--fg-dim); text-decoration:none; letter-spacing:.03em;
-    border-bottom:1px solid transparent;
   }
-  .links a:hover, .links a:focus-visible{ color:var(--amber); border-bottom-color:var(--amber-dim); text-shadow:var(--amber-glow); outline:none; }
+  .links a .sw{ width:8px; height:8px; display:inline-block; }
+  .links a:hover, .links a:focus-visible{ color:var(--fg); outline:none; }
 </style>
 </head>
 <body>
@@ -165,26 +150,26 @@
   </div>
 
   <form class="search-row" id="search-form" action="https://www.google.com/search" method="GET" target="_self">
-    <span class="prompt">$</span>
+    <span class="p-user">study</span><span class="p-host">@oled</span><span class="p-path">:~</span><span class="p-sign">$</span>
     <input type="text" id="search" name="q" placeholder="search" autocomplete="off" autofocus>
     <span class="cursor" aria-hidden="true"></span>
   </form>
 
   <div class="panels">
     <div class="panel">
-      <div class="label">Pomodoro</div>
+      <div class="label blue">Pomodoro</div>
       <div class="timer-display" id="timer-display">25:00</div>
       <div class="timer-mode" id="timer-mode">focus session</div>
       <div class="btn-row">
         <button id="timer-toggle">Start</button>
         <button id="timer-reset">Reset</button>
-        <button id="mode-focus" class="active">25</button>
-        <button id="mode-break">5</button>
+        <button id="mode-focus" class="active mode-focus">25</button>
+        <button id="mode-break" class="mode-break">5</button>
       </div>
     </div>
 
     <div class="panel">
-      <div class="label">To-do</div>
+      <div class="label green">To-do</div>
       <form class="todo-input-row" id="todo-form">
         <input type="text" id="todo-input" placeholder="add a task, press enter" autocomplete="off">
       </form>
@@ -195,12 +180,12 @@
   <hr class="divider">
 
   <nav class="links" aria-label="quick links">
-    <a href="https://mail.google.com" target="_blank" rel="noopener">gmail</a>
-    <a href="https://drive.google.com" target="_blank" rel="noopener">drive</a>
-    <a href="https://goedu.kmitl.ac.th" target="_blank" rel="noopener">goedu</a>
-    <a href="https://scholar.google.com" target="_blank" rel="noopener">scholar</a>
-    <a href="https://www.notion.so" target="_blank" rel="noopener">notion</a>
-    <a href="https://docs.google.com" target="_blank" rel="noopener">docs</a>
+    <a href="https://mail.google.com" target="_blank" rel="noopener"><span class="sw" style="background:var(--pink)"></span>gmail</a>
+    <a href="https://drive.google.com" target="_blank" rel="noopener"><span class="sw" style="background:var(--green)"></span>drive</a>
+    <a href="https://goedu.kmitl.ac.th/" target="_blank" rel="noopener"><span class="sw" style="background:var(--peach)"></span>goedu</a>
+    <a href="https://scholar.google.com" target="_blank" rel="noopener"><span class="sw" style="background:var(--blue)"></span>scholar</a>
+    <a href="https://www.notion.so" target="_blank" rel="noopener"><span class="sw" style="background:var(--purple)"></span>notion</a>
+    <a href="https://docs.google.com" target="_blank" rel="noopener"><span class="sw" style="background:var(--lblue)"></span>docs</a>
   </nav>
 
 </div>
@@ -244,6 +229,7 @@
     const s = secondsLeft%60;
     timerDisplay.textContent = `${pad(m)}:${pad(s)}`;
     timerModeEl.textContent = mode === 'focus' ? 'focus session' : 'break';
+    timerDisplay.style.color = mode === 'focus' ? 'var(--blue)' : 'var(--purple)';
   }
 
   function setMode(newMode){
@@ -266,7 +252,6 @@
         clearInterval(intervalId);
         running = false;
         toggleBtn.textContent = 'Start';
-        // auto-switch mode
         setMode(mode === 'focus' ? 'break' : 'focus');
       }
     }, 1000);
@@ -278,9 +263,7 @@
     toggleBtn.textContent = 'Start';
   }
 
-  toggleBtn.addEventListener('click', ()=>{
-    if(running){ pauseTimer(); } else { startTimer(); }
-  });
+  toggleBtn.addEventListener('click', ()=>{ running ? pauseTimer() : startTimer(); });
   resetBtn.addEventListener('click', ()=>{
     secondsLeft = mode === 'focus' ? FOCUS : BREAK;
     pauseTimer();
