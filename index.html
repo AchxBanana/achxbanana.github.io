@@ -1,91 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minimal Greeting!</title>
-    <link rel="icon" type="image/x-icon" href="pot.ico">
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbit&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      function performSearch(event) {
-        event.preventDefault();
-        const searchQuery = document.getElementById("search-input").value;
-        if (searchQuery.trim() !== "") {
-          const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(
-            searchQuery
-          )}`;
-          window.open(searchUrl, "_blank");
-        }
-      }
-    </script>
-  </head>
-  <body class="bg-stone-900">
-    <div class="container mx-auto">
-      <!-- Time Display -->
-      <h1
-        class="text-white font-bold text-5xl text-center mt-[5%] hover:scale-105 transition-transform duration-300"
-        id="time"
-      ></h1>
-      <!-- Greeting Display -->
-      <p
-        class="text-white font-bold text-4xl md:text-5xl text-center mt-[8%] hover:text-gray-400 transition-colors duration-300"
-        id="greeting"
-      ></p>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --fg:#e4e4e4;
+    --fg-dim:#6b6b6b;
+    --amber:#ffb000;
+    --amber-dim:#7a5200;
+    --amber-glow: 0 0 6px rgba(255,176,0,.55), 0 0 18px rgba(255,176,0,.18);
+    --border:#242016;
+    --danger:#7a3d3d;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:var(--bg); color:var(--fg);
+    font-family:'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  }
+  body{
+    display:flex; align-items:center; justify-content:center;
+    min-height:100vh; padding:6vh 5vw;
+  }
+  .screen{
+    width:100%; max-width:760px;
+  }
 
-      <!-- Social Media Links as Text -->
-      <div class="flex justify-center mt-[10%] space-x-6 text-xl">
-        <a
-          href="https://www.youtube.com/"
-          class="text-white hover:text-red-600 hover:underline transition-colors duration-300"
-          >YouTube</a
-        >
-        <a
-          href="https://www.instagram.com/"
-          class="text-white hover:text-pink-500 hover:underline transition-colors duration-300"
-          >Instagram</a
-        >
-        <a
-          href="https://www.github.com/"
-          class="text-white hover:text-gray-500 hover:underline transition-colors duration-300"
-          >GitHub</a
-        >
-        <a
-          href="https://www.printables.com/"
-          class="text-white hover:text-slate-500 hover:underline transition-colors duration-300"
-          >Printables</a
-        >
+  /* ---------- top bar: clock + date ---------- */
+  .topbar{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:2.2rem;
+    letter-spacing:.04em;
+  }
+  .clock{
+    font-size:clamp(2.2rem, 6vw, 3.2rem);
+    font-weight:600;
+    color:var(--amber);
+    text-shadow:var(--amber-glow);
+    font-variant-numeric: tabular-nums;
+  }
+  .date{
+    font-size:.8rem;
+    color:var(--fg-dim);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    align-self:flex-end;
+    margin-bottom:.4rem;
+  }
+
+  /* ---------- search ---------- */
+  .search-row{
+    display:flex; align-items:center;
+    border:1px solid var(--border);
+    padding:.75rem 1rem;
+    margin-bottom:1.6rem;
+  }
+  .prompt{ color:var(--amber); margin-right:.6rem; text-shadow:var(--amber-glow);}
+  #search{
+    flex:1; background:transparent; border:none; outline:none;
+    color:var(--fg); font-family:inherit; font-size:1rem;
+    caret-color:var(--amber);
+  }
+  #search::placeholder{ color:var(--fg-dim); }
+  .cursor{
+    display:inline-block; width:.55em; height:1.1em;
+    background:var(--amber); box-shadow:var(--amber-glow);
+    margin-left:2px; animation:blink 1s step-end infinite;
+    vertical-align:text-bottom;
+  }
+  @media (prefers-reduced-motion: reduce){ .cursor{ animation:none; opacity:.7;} }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .divider{
+    border:none; border-top:1px dashed var(--border);
+    margin:1.8rem 0;
+  }
+
+  /* ---------- two columns ---------- */
+  .panels{
+    display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  }
+  @media (max-width:600px){ .panels{ grid-template-columns:1fr; } }
+
+  .label{
+    font-size:.72rem; letter-spacing:.16em; color:var(--fg-dim);
+    text-transform:uppercase; margin-bottom:.9rem;
+  }
+
+  /* ---------- pomodoro ---------- */
+  .timer-display{
+    font-size:clamp(2.4rem,7vw,3rem);
+    font-weight:700;
+    color:var(--amber);
+    text-shadow:var(--amber-glow);
+    font-variant-numeric: tabular-nums;
+    margin-bottom:.8rem;
+  }
+  .timer-mode{ font-size:.75rem; color:var(--fg-dim); margin-bottom:.9rem; }
+  .btn-row{ display:flex; flex-wrap:wrap; gap:.5rem; }
+  button{
+    background:transparent; color:var(--fg);
+    border:1px solid var(--border); font-family:inherit;
+    font-size:.75rem; letter-spacing:.06em; text-transform:uppercase;
+    padding:.5rem .8rem; cursor:pointer;
+  }
+  button:hover{ border-color:var(--amber); color:var(--amber); }
+  button:focus-visible, input:focus-visible{
+    outline:1px solid var(--amber); outline-offset:2px;
+  }
+  button.active{ border-color:var(--amber); color:var(--amber); text-shadow:var(--amber-glow); }
+
+  /* ---------- todo ---------- */
+  .todo-input-row{ display:flex; gap:.5rem; margin-bottom:.9rem; }
+  .todo-input-row input{
+    flex:1; background:transparent; border:1px solid var(--border);
+    color:var(--fg); font-family:inherit; font-size:.85rem; padding:.5rem .6rem;
+    outline:none;
+  }
+  .todo-input-row input:focus{ border-color:var(--amber); }
+  ul#todo-list{ list-style:none; margin:0; padding:0; }
+  ul#todo-list li{
+    display:flex; align-items:center; gap:.6rem;
+    padding:.4rem 0; border-bottom:1px solid var(--border);
+    font-size:.88rem;
+  }
+  ul#todo-list li .check{
+    width:14px; height:14px; border:1px solid var(--fg-dim);
+    flex:0 0 auto; cursor:pointer; position:relative;
+  }
+  ul#todo-list li.done .check{ border-color:var(--amber); background:var(--amber); box-shadow:var(--amber-glow); }
+  ul#todo-list li.done span.task{ color:var(--fg-dim); text-decoration:line-through; }
+  ul#todo-list li span.task{ flex:1; cursor:pointer; word-break:break-word; }
+  ul#todo-list li .del{
+    color:var(--fg-dim); cursor:pointer; font-size:.9rem; padding:0 .2rem;
+    background:none; border:none;
+  }
+  ul#todo-list li .del:hover{ color:var(--danger); }
+  .empty{ color:var(--fg-dim); font-size:.8rem; font-style:italic; }
+
+  /* ---------- links ---------- */
+  .links{
+    margin-top:2rem; display:flex; flex-wrap:wrap; gap:1.4rem;
+    font-size:.82rem;
+  }
+  .links a{
+    color:var(--fg-dim); text-decoration:none; letter-spacing:.03em;
+    border-bottom:1px solid transparent;
+  }
+  .links a:hover, .links a:focus-visible{ color:var(--amber); border-bottom-color:var(--amber-dim); text-shadow:var(--amber-glow); outline:none; }
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <div class="topbar">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">--- -- ----</div>
+  </div>
+
+  <form class="search-row" id="search-form" action="https://www.google.com/search" method="GET" target="_self">
+    <span class="prompt">$</span>
+    <input type="text" id="search" name="q" placeholder="search" autocomplete="off" autofocus>
+    <span class="cursor" aria-hidden="true"></span>
+  </form>
+
+  <div class="panels">
+    <div class="panel">
+      <div class="label">Pomodoro</div>
+      <div class="timer-display" id="timer-display">25:00</div>
+      <div class="timer-mode" id="timer-mode">focus session</div>
+      <div class="btn-row">
+        <button id="timer-toggle">Start</button>
+        <button id="timer-reset">Reset</button>
+        <button id="mode-focus" class="active">25</button>
+        <button id="mode-break">5</button>
       </div>
     </div>
 
-    <!-- Search Form -->
-    <div class="mt-[10%] flex justify-center">
-      <form class="w-full max-w-sm" onsubmit="performSearch(event)">
-        <div class="flex items-center border-b border-gray-700 py-2">
-          <input
-            id="search-input"
-            class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300"
-            type="text"
-            placeholder="Search..."
-            aria-label="Search"
-          />
-          <button
-            class="flex-shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
-            type="submit"
-          >
-            Search
-          </button>
-        </div>
+    <div class="panel">
+      <div class="label">To-do</div>
+      <form class="todo-input-row" id="todo-form">
+        <input type="text" id="todo-input" placeholder="add a task, press enter" autocomplete="off">
       </form>
+      <ul id="todo-list"></ul>
     </div>
+  </div>
 
-    <!-- Link to external JavaScript file -->
-    <script src="main.js"></script>
-  </body>
+  <hr class="divider">
+
+  <nav class="links" aria-label="quick links">
+    <a href="https://mail.google.com" target="_blank" rel="noopener">gmail</a>
+    <a href="https://drive.google.com" target="_blank" rel="noopener">drive</a>
+    <a href="https://calendar.google.com" target="_blank" rel="noopener">calendar</a>
+    <a href="https://scholar.google.com" target="_blank" rel="noopener">scholar</a>
+    <a href="https://www.notion.so" target="_blank" rel="noopener">notion</a>
+    <a href="https://docs.google.com" target="_blank" rel="noopener">docs</a>
+  </nav>
+
+</div>
+
+<script>
+  // ---------- clock ----------
+  const clockEl = document.getElementById('clock');
+  const dateEl = document.getElementById('date');
+  function pad(n){ return n.toString().padStart(2,'0'); }
+  function tick(){
+    const now = new Date();
+    clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    const opts = { weekday:'short', day:'2-digit', month:'short', year:'numeric' };
+    dateEl.textContent = now.toLocaleDateString('en-GB', opts).toUpperCase();
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ---------- search ----------
+  document.getElementById('search-form').addEventListener('submit', function(e){
+    const q = document.getElementById('search').value.trim();
+    if(!q){ e.preventDefault(); }
+  });
+
+  // ---------- pomodoro ----------
+  const FOCUS = 25*60, BREAK = 5*60;
+  let secondsLeft = FOCUS;
+  let mode = 'focus';
+  let running = false;
+  let intervalId = null;
+
+  const timerDisplay = document.getElementById('timer-display');
+  const timerModeEl = document.getElementById('timer-mode');
+  const toggleBtn = document.getElementById('timer-toggle');
+  const resetBtn = document.getElementById('timer-reset');
+  const focusBtn = document.getElementById('mode-focus');
+  const breakBtn = document.getElementById('mode-break');
+
+  function renderTimer(){
+    const m = Math.floor(secondsLeft/60);
+    const s = secondsLeft%60;
+    timerDisplay.textContent = `${pad(m)}:${pad(s)}`;
+    timerModeEl.textContent = mode === 'focus' ? 'focus session' : 'break';
+  }
+
+  function setMode(newMode){
+    mode = newMode;
+    secondsLeft = mode === 'focus' ? FOCUS : BREAK;
+    focusBtn.classList.toggle('active', mode==='focus');
+    breakBtn.classList.toggle('active', mode==='break');
+    pauseTimer();
+    renderTimer();
+  }
+
+  function startTimer(){
+    running = true;
+    toggleBtn.textContent = 'Pause';
+    intervalId = setInterval(()=>{
+      if(secondsLeft > 0){
+        secondsLeft--;
+        renderTimer();
+      } else {
+        clearInterval(intervalId);
+        running = false;
+        toggleBtn.textContent = 'Start';
+        // auto-switch mode
+        setMode(mode === 'focus' ? 'break' : 'focus');
+      }
+    }, 1000);
+  }
+
+  function pauseTimer(){
+    running = false;
+    clearInterval(intervalId);
+    toggleBtn.textContent = 'Start';
+  }
+
+  toggleBtn.addEventListener('click', ()=>{
+    if(running){ pauseTimer(); } else { startTimer(); }
+  });
+  resetBtn.addEventListener('click', ()=>{
+    secondsLeft = mode === 'focus' ? FOCUS : BREAK;
+    pauseTimer();
+    renderTimer();
+  });
+  focusBtn.addEventListener('click', ()=> setMode('focus'));
+  breakBtn.addEventListener('click', ()=> setMode('break'));
+
+  renderTimer();
+
+  // ---------- todo list ----------
+  const STORAGE_KEY = 'oled-study-todos';
+  const todoForm = document.getElementById('todo-form');
+  const todoInput = document.getElementById('todo-input');
+  const todoList = document.getElementById('todo-list');
+
+  function loadTodos(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+  function saveTodos(todos){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(todos)); }catch(e){}
+  }
+
+  let todos = loadTodos();
+
+  function renderTodos(){
+    todoList.innerHTML = '';
+    if(todos.length === 0){
+      const li = document.createElement('li');
+      li.style.border = 'none';
+      li.innerHTML = '<span class="empty">nothing queued</span>';
+      todoList.appendChild(li);
+      return;
+    }
+    todos.forEach((t, i)=>{
+      const li = document.createElement('li');
+      if(t.done) li.classList.add('done');
+      li.innerHTML = `
+        <span class="check" role="checkbox" aria-checked="${t.done}" tabindex="0"></span>
+        <span class="task">${escapeHtml(t.text)}</span>
+        <button class="del" aria-label="delete task">&times;</button>
+      `;
+      const checkEl = li.querySelector('.check');
+      const taskEl = li.querySelector('.task');
+      const delEl = li.querySelector('.del');
+
+      function toggle(){
+        todos[i].done = !todos[i].done;
+        saveTodos(todos);
+        renderTodos();
+      }
+      checkEl.addEventListener('click', toggle);
+      checkEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+      taskEl.addEventListener('click', toggle);
+      delEl.addEventListener('click', ()=>{
+        todos.splice(i,1);
+        saveTodos(todos);
+        renderTodos();
+      });
+      todoList.appendChild(li);
+    });
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  todoForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const val = todoInput.value.trim();
+    if(!val) return;
+    todos.push({ text: val, done:false });
+    saveTodos(todos);
+    todoInput.value = '';
+    renderTodos();
+  });
+
+  renderTodos();
+</script>
+</body>
 </html>
